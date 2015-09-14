@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body ng-controller="MainController" keyboard-keys>
+    <div class="main" snapscroll fit-window-height snap-index="snapIndex" after-snap="afterSnap(snapIndex)" snap-animation="snapAnimation" ng-swipe-up="swipeUp()" ng-swipe-down="swipeDown()">
+        <div>
+            <h1>Welcome to server admin console !!</h1>
+            <h3>This console allow you to monitor service, player status,  concurrent users on game server.</h3>
+            <h3>Features :</h3>
+            <ul>
+                <li>Monitor concurrent users</li>
+                <li>Monitor memory usage</li>
+                <li>Monitor cpu usage</li>
+                <li>Monitor backend server status</li>
+                <li>Monitor SQL server status</li>
+
+                <li>Kick Player</li>
+                <li>Switch port ON/OFF</li>
+            </ul>
+
+            <h3>Following pages are server setup tutorial.</h3>
+        </div>
+        <div>
+            <h3>Step 1:  Setup listen port, that includes, 1.client port 2.http port of service 3.websocket port of servicet</h3>
+            <img ng-src="assets/images/Setup.png"/>
+        </div>
+        <div>
+            <h3>Step 2:  Launch game server</h3>
+            <img ng-src="assets/images/Launch.png"/>
+        </div>
+        <div>
+            <h3>Step 3:  Game server instance</h3>
+            <img ng-src="assets/images/Console.png"/>
+        </div>
+    </div>
+    <ul class="indicators">
+        <li><a href="#" ng-click="snapIndex=0"><span ng-class="{active: snapIndex == 0}"></span></a></li>
+        <li><a href="#" ng-click="snapIndex=1"><span ng-class="{active: snapIndex == 1}"></span></a></li>
+        <li><a href="#" ng-click="snapIndex=2"><span ng-class="{active: snapIndex == 2}"></span></a></li>
+        <li><a href="#" ng-click="snapIndex=3"><span ng-class="{active: snapIndex == 3}"></span></a></li>
+    </ul>
+
+</body>
+</html>

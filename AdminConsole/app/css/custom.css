@@ -1,0 +1,126 @@
+input.ng-invalid {
+    border:2px solid red;
+}
+
+input.ng-valid{
+    border:2px solid green;
+}
+
+body {
+    margin: 0;
+    color: white;
+    font-size: 0.75em;
+    font-family: 'Open Sans', sans-serif;
+}
+div {
+    box-sizing: border-box;
+}
+/*h1, h2, h3 {*/
+    /*padding: 1em 0 0.5em;*/
+    /*margin: 0;*/
+/*}*/
+p {
+    margin: 0.25em 0 0.5em;
+}
+.examples {
+    color: orange;
+}
+a {
+    color: orange;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+.main > div {
+    height: 100vh;
+    padding-right: 60px;
+    padding-left: 1em;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.6) inset;
+}
+.main > div:nth-child(odd) {
+    background: rgb(10, 84, 92);
+}
+.main > div:nth-child(even) {
+    background: rgb(5, 57, 63);
+    color: aliceblue;
+}
+.nested {
+    height: 200px;
+    background: rgb(5, 159, 179);
+}
+.nested div {
+    text-align: center;
+    line-height: 200px;
+    border: 5px rgb(10, 84, 92) solid;
+}
+.nested span {
+    width: 128px;
+    font-size: 5em;
+    font-weight: bold;
+    margin-top: -10px;
+    line-height: 128px;
+    border-radius: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    border: 10px #fff solid;
+}
+.clearfix {
+    overflow: hidden;
+    height: auto;
+}
+.clearfix > div {
+    width: 50%;
+    float: left;
+    height: 200px;
+    overflow: auto;
+    margin-top: 1em;
+}
+.indicators {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    width: 40px;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    z-index: 1;
+}
+.indicators li {
+    line-height: 30px;
+}
+.indicators a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+}
+.indicators span {
+    width: 14px;
+    height: 14px;
+    background: white;
+    border-radius: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+.indicators .active {
+    background: orange;
+}
+@media screen and (min-width: 768px) {
+    body {
+        font-size: 1em;
+    }
+    .indicators {
+        right: 11px;
+    }
+    .indicators li {
+        line-height: 22px;
+    }
+}
+@media screen and (min-width: 1152px) {
+    .indicators {
+        right: 25px;
+    }
+}

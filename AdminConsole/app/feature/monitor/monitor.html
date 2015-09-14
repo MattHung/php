@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <!--<ng-include src="ServerInfo.js"></ng-include>-->
+
+    <div class="main" ng-controller="controller_monitor" ng-init="Initial()">
+        <span id="title">
+        </span>
+
+        <span id="panel">
+        </span>
+
+        <span ng-controller="controller_monitor_player_list">
+            <button type="button" class="btn-xs btn-danger" ng-really-message="Sure to kick all ??" ng-really-click="kickAllSession()">Kick All</button>
+
+            <table st-Table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>USER_ID</th>
+                        <th>Alias</th>
+                        <th>RemoteIP</th>
+                        <th>Login Time at</th>
+                        <th></th>
+                    </tr>
+
+                    <tr>
+                        <th colspan="5">
+                            <input st-search class="form-control" placeholder="global search..." type="search">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in displayedCollection">
+                        <td>{{row.id}}</td>
+                        <td>{{row.user_id}}</td>
+                        <td>{{row.alias}}</td>
+                        <td>{{row.remoteIP}}</td>
+                        <td>{{row.loginAt}}</td>
+                        <td>
+                            <button type="button" ng-click="kickSession(row.id)" class="btn btn-sm btn-danger">
+                                <i class="glyphicon glyphicon-remove-circle">
+                                </i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+
+                <td colspan="5" class="text-center">
+                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="10"></div>
+                </td>
+            </table>
+        </span>
+
+        <div id="tooltip" style="position: absolute; border: 1px solid rgb(255, 221, 221); padding: 1px; opacity: 0.8; top: 0px; left: 0px; display: block;
+            'background-color: rgb(255, 238, 238);"></div>
+    </div>
+</body>
+</html>
