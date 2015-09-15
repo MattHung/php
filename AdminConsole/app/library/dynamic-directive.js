@@ -81,6 +81,10 @@ var dymaicmodule = angular.module('dymaicmodule', []);
 
                                 ctx.register();
                                 ctx.recompileInnerElement(scope, element, currentSuffix);
+
+                                if(dynamicDirectiveManager.OnRecompileCompleted!=undefined)
+                                if(dynamicDirectiveManager.OnRecompileCompleted!=null)
+                                    dynamicDirectiveManager.OnRecompileCompleted(scope, element, currentSuffix)
                             }
                         });
 
@@ -190,6 +194,8 @@ var dymaicmodule = angular.module('dymaicmodule', []);
         var dynDirectives = {};
         var registeredDirectives = {};
         var regex = /^[a-z0-9]+$/;
+
+        this.OnRecompileCompleted=null;
 
         /**
          * Adds a dynamic directive controller instance to the manager.

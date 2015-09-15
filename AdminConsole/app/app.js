@@ -2,12 +2,14 @@
  * Created by matt_hung on 2015/8/17.
  */
 
-var module_login=angular.module("module_login", []);
+var module_login=angular.module("module_login", ['dymaicmodule']);
 
 var module_tutorial=angular.module("module_tutorial", ['swipe', 'snapscroll']);
-module_tutorial.config(['$routeProvider', '$controllerProvider', '$compileProvider', function ($routeProvider, $controllerProvider, $compileProvider) {
+module_tutorial.config(['$routeProvider', '$controllerProvider', '$compileProvider', 'dynamicDirectiveManagerProvider',
+    function ($routeProvider, $controllerProvider, $compileProvider, dynamicDirectiveManagerProvider) {
     module_tutorial.registerCtrl = $controllerProvider.register;
     module_tutorial.compileProvider    = $compileProvider;
+    dynamicDirectiveManagerProvider.setCompileProvider($compileProvider);
 }]);
 
 var module_monitor=angular.module("module_monitor", ['dymaicmodule', 'smart-table', 'ngResource']);

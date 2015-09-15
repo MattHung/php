@@ -13,10 +13,33 @@ class BaseController extends CI_Controller{
 
         $this->load->model('model_account', 'db_account');
         $this->check_db_initial();
+
+        $this->load->library('session');
+        $this->load->helper('url');
+
+//        if(!$this->check_session_valid())
+//            return;
+
+        $this->load->library('javascript');
+        $this->load->helper('cookie');
+        $this->load->helper('directory');
+        $this->load->helper('form');
+        $this->load->helper('language');
+        $this->load->helper('path');
+        $this->load->helper('html');
+
     }
 
-    public function index(){
+    private function check_session_valid(){
 
+        $account=$this->session->userdata('account');
+
+        if(is_null($account)) {
+            redirect(base_url());
+            return false;
+        }
+
+        return true;
     }
 
     private function check_db_initial(){

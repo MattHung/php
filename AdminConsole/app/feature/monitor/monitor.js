@@ -21,7 +21,7 @@ module_monitor.registerCtrl("controller_monitor", ['$scope', '$location', '$inte
         $scope.TryInitialControls=function(jsondata){
             var games=[];
 
-            jsondata["ServerIP"]=RemoteServerAddress.split(":")[0];
+            jsondata["ServerIP"]=GameServerAddress.split(":")[0];
             jsondata["ServerID"]=jsondata["ServerIP"].replace(/\./g, "");
 
             $scope.serverStatus.InitialTitle(jsondata);
@@ -59,14 +59,14 @@ module_monitor.registerCtrl("controller_monitor", ['$scope', '$location', '$inte
         };
 
         $scope.UpdateServerInfo=function(){
-            $http.jsonp(API_ServerInfo)
+            $http.jsonp(GameServerAPI_ServerInfo)
                 .then(function(json) {
                     $scope.TryInitialControls(json.data);
-                    $scope.OnJsonResult(RemoteServerAddress, json.data);
+                    $scope.OnJsonResult(GameServerAddress, json.data);
                 }, function(err) {
                     var jsondata=[];
                     jsondata["error"]=true;
-                    $scope.OnJsonResult(RemoteServerAddress, jsondata);
+                    $scope.OnJsonResult(GameServerAddress, jsondata);
                 });
         };
     }
@@ -82,21 +82,21 @@ module_monitor.registerCtrl("controller_monitor_player_list", ['$scope', '$http'
     $scope.$on("OnUpdate", function(event){$scope.OnUpdate(event)});
 
     $scope.kickSession=function(sessionID){
-        $http.get(API_KickSession + sessionID).
+        $http.get(GameServerAPI_KickSession + sessionID).
             then(function(response) {
             }, function(response) {
             });
     };
 
     $scope.kickAllSession=function(){
-        $http.get(API_KickAll +  $scope.serverStatus.game_list.current_game().id).
+        $http.get(GameServerAPI_KickAll +  $scope.serverStatus.game_list.current_game().id).
             then(function(response) {
             }, function(response) {
             });
     };
 
     $scope.OnUpdate=function(event, game){
-        $http.get(API_GetSessionList).
+        $http.get(GameServerAPI_GetSessionList).
             then(function(response) {
                 $scope.OnUpdateActorList(response.data);
             }, function(response) {
