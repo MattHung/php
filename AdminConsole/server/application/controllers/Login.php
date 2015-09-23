@@ -18,19 +18,19 @@ define('Max_Password_Len', 30);
 class Login extends BaseController{
     public function index(){}
 
-    public function CreateAccount($account=null, $password=null, $code_CAPTCHA=null){
+    public function CreateAccount($account=null, $password=null, $code=null, $code_CAPCHA=null){
         if ($account == null){
-            $this->respond('Invalid arguments');
+            $this->respond('Field "email" is required !');
             return;
         }
 
         if ($password == null){
-            $this->respond('Invalid arguments');
+            $this->respond('Field "password" is required !');
             return;
         }
 
-        if ($code_CAPTCHA == null){
-            $this->respond('Invalid arguments');
+        if ($code == null){
+            $this->respond('Please enter the letters displayed !');
             return;
         }
 
@@ -39,14 +39,12 @@ class Login extends BaseController{
             'data'   =>null
         );
 
-        if(!$this->rpHash($code_CAPTCHA))
+        if(is_null($code_CAPCHA))
+            return;
+
+        if($this->rpHash($code)!=$code_CAPCHA)
         {
             $this->respond('Validation error!!');
-            return;
-        }
-
-        if(!$this->db_account->create_account($account, $password)) {
-            $this->respond('Duplicate account!');
             return;
         }
 
@@ -60,20 +58,39 @@ class Login extends BaseController{
             return;
         }
 
-        $this->RequestLogin($account, $password);
+        if(!$this->db_account->create_account(base64_decode($account), $password)) {
+            $this->respond('Account already exist !');
+            return;
+        }
+
+        $this->respond('Create Account Success !');
+
+//        $this->RequestLogin($account, $password);
     }
 
     public function RequestLogin($account=null, $password=null)
     {
         if ($account == null){
-            $this->respond('Invalid arguments');
+            $this->respond('Field "email" is required !');
             return;
         }
 
         if ($password == null){
-            $this->respond('Invalid arguments');
+            $this->respond('Field "password" is required !');
             return;
         }
+
+        if(!$this->validation_account($account)){
+            $this->respond('Invalid account length !');
+            return;
+        }
+
+        if(!$this->validation_password($account)){
+            $this->respond('Invalid password length !');
+            return;
+        }
+
+        $account=base64_decode($account);
 
         $login_result=$this->db_account->select_account($account, $password);
 
@@ -82,15 +99,12 @@ class Login extends BaseController{
             return;
         }
 
-        if(!$this->validation_account($account)){
-            $this->respond('Invalid account length !');
+        if($login_result['password']!=$password){
+            $this->respond('Password Error!');
             return;
         }
 
-        if(!$this->validation_password($account)){
-            $this->respond('Invalid password length !');
-            return;
-        }
+        $this->respond('Login Success !');
 
         $this->session->set_userdata(Session_key_account, $login_result);
     }

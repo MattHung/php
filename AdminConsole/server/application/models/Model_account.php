@@ -51,8 +51,10 @@ class Model_account extends CI_Model{
         return true;
     }
 
-    public function select_account($account, $password){
-        $query=Model_account::$m_db_Account->select('*')->where('account', $account)->get(Table_Account);
+    public function select_account($account){
+        $query=Model_account::$m_db_Account->select('*');
+        $query=Model_account::$m_db_Account->where('account', $account);
+        $query=Model_account::$m_db_Account->get(Table_Account);
 
         if($query->num_rows()<=0)
             return null;

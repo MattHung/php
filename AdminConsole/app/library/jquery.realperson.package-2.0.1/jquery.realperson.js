@@ -4,6 +4,19 @@
    Available under the MIT (http://keith-wood.name/licence.html) license. 
    Please attribute the author if you use it. */
 
+var Code_CAPTCHA='';
+
+/* Compute a hash value for the given text.
+ @param value {string} The text to hash.
+ @return {number} The corresponding hash value. */
+function hash(value) {
+    var hash = 5381;
+    for (var i = 0; i < value.length; i++) {
+        hash = ((hash << 5) + hash) + value.charCodeAt(i);
+    }
+    return hash;
+}
+
 (function($) { // Hide scope, no $ conflict
 
 	var pluginName = 'realperson';
@@ -106,6 +119,9 @@
 			for (var i = 0; i < inst.options.length; i++) {
 				text += inst.options.chars.charAt(Math.floor(Math.random() * inst.options.chars.length));
 			}
+
+            Code_CAPTCHA=text;
+
 			inst.hash = hash(text + salt);
 			var self = this;
 			elem.closest('form').off('.' + inst.name).
@@ -197,16 +213,4 @@
 			salt = '';
 		}
 	});
-
-	/* Compute a hash value for the given text.
-	   @param value {string} The text to hash.
-	   @return {number} The corresponding hash value. */
-	function hash(value) {
-		var hash = 5381;
-		for (var i = 0; i < value.length; i++) {
-			hash = ((hash << 5) + hash) + value.charCodeAt(i);
-		}
-		return hash;
-	}
-
 })(jQuery);
