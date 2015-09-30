@@ -11,11 +11,13 @@ module_monitor.registerCtrl("controller_monitor", ['$scope', '$location', '$inte
         $scope.timer;
 
         $scope.Initial = function(){
-            $scope.StartTimer();
+            //$scope.StartTimer();
+
+            $scope.OnUpdateInfo();
         };
 
         $scope.$on('$destroy', function() {
-            $scope.StopTimer();
+            //$scope.StopTimer();
         });
 
         $scope.TryInitialControls=function(jsondata){
@@ -27,16 +29,24 @@ module_monitor.registerCtrl("controller_monitor", ['$scope', '$location', '$inte
             $scope.serverStatus.InitialTitle(jsondata);
         };
 
-        $scope.StartTimer=function(){
-            if(angular.isDefined($scope.timer))
-                return;
+        //$scope.StartTimer=function(){
+        //    if(angular.isDefined($scope.timer))
+        //        return;
+        //
+        //    $scope.timer=$interval(function(){
+        //        $scope.OnTimer();
+        //    }, 100);
+        //};
+        //
+        //$scope.OnTimer= function () {
+        //    $scope.UpdateServerInfo();
+        //
+        //    if($scope.serverStatus.game_list!=null)
+        //        $scope.$broadcast("OnUpdate");
+        //};
 
-            $scope.timer=$interval(function(){
-                $scope.OnTimer();
-            }, 100);
-        };
-
-        $scope.OnTimer= function () {
+        $scope.OnUpdateInfo=function()
+        {
             $scope.UpdateServerInfo();
 
             if($scope.serverStatus.game_list!=null)
@@ -63,10 +73,14 @@ module_monitor.registerCtrl("controller_monitor", ['$scope', '$location', '$inte
                 .then(function(json) {
                     $scope.TryInitialControls(json.data);
                     $scope.OnJsonResult(GameServerAddress, json.data);
+
+                    $scope.OnUpdateInfo();
                 }, function(err) {
                     var jsondata=[];
                     jsondata["error"]=true;
                     $scope.OnJsonResult(GameServerAddress, jsondata);
+
+                    $scope.OnUpdateInfo();
                 });
         };
     }
