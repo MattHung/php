@@ -31,41 +31,68 @@ function IsDir(row) {
     return false;
 }
 
+function Alphanumeric(inputtxt) {
+    var letters = '/^[0-9a-zA-Z]+$/';
+    if (letters.test(inputtxt)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+var searchTrack=[];
+
 function CheckRow(root, dir, row, excludeKeyword){
     var result=[];
-    $(row).find("tr").each(function(){
-        var hrefResult=[];
-        for(var cell in this.cells){
-            cell=this.cells[cell];
+    var elements=["tr", "li"];
 
-            var href=GetChildTag(cell, "href");
+    searchTrack.push(dir);
 
-            if(href=="")
-                continue;
+    for(var tag in elements) {
+        $(row).find(elements[tag]).each(function () {
+            var hrefResult = [];
 
-            var originURL=sprintf("%s%s", window.location.origin, window.location.pathname);
-            href=href.replace(originURL, root);
+            var cells=[];
 
-            //if(href.indexOf(".js")<=-1) {
-            if(href.substr(href.lastIndexOf('.')+1)!="js"){
-                if (IsDir(this.cells)) {
+            if(this.cells!=undefined)
+                cells=this.cells;
+            else
+                cells.push(this);
+
+            for (var cell in cells) {
+                cell = cells[cell];
+
+                var href = GetChildTag(cell, "href");
+
+                if (href == "")
+                    continue;
+
+                var originURL = sprintf("%s%s", window.location.origin, window.location.pathname);
+                href = href.replace(originURL, root);
+
+                //if(href.indexOf(".js")<=-1) {
+                if (href.substr(href.lastIndexOf('.') + 1) != "js") {
+                    if (href.lastIndexOf('/') != (href.length - 1))
+                        continue;
+
+                    if($.inArray(href, searchTrack)>=0)
+                        continue;
+
                     LoadJSFilesInternal(root, href, excludeKeyword);
                     continue;
                 }
 
-                continue;
+                if (excludeKeyword != undefined)
+                    if (cell.innerText.indexOf(excludeKeyword) >= 0)
+                        continue;
+
+
+                hrefResult.push(cell.innerText.replace(" ", ""));
             }
 
-            if(excludeKeyword!=undefined)
-            if(cell.innerText.indexOf(excludeKeyword)>=0)
-                continue;
-
-
-            hrefResult.push(cell.innerText);
-        }
-
-        result=result.concat(hrefResult);
-    });
+            result = result.concat(hrefResult);
+        });
+    }
 
     for(var i=0; i<result.length; i++)
         OnLoadJSFile(sprintf("%s%s", dir, result[i]));
