@@ -45,7 +45,8 @@ function GameList(selector_owner, existGames){
         var name = jsondata['ServerID'];
 
         for(var index=0; index<jsondata['ConcurrentUser'].length; index++){
-            var game_id=jsondata['ConcurrentUser'][index].GameID;
+            var game_id=jsondata['ConcurrentUser'][index].GameID!=undefined ? jsondata['ConcurrentUser'][index].GameID : jsondata['ConcurrentUser'][index].GameType;
+            
             var ccu=jsondata['ConcurrentUser'][index].CCU;
             var rowName=name+'_'+game_id;
 

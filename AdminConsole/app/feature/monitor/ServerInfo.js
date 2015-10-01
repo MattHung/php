@@ -197,9 +197,14 @@ function ServerInfo(selector_title, selector_panel){
         if(jsondata.hasOwnProperty('ConcurrentUser'))
         for(var index=0; index<jsondata['ConcurrentUser'].length; index++){
             var game_id=jsondata['ConcurrentUser'][index].GameID;
+
+            if(game_id==undefined)
+                game_id=jsondata['ConcurrentUser'][index].GameType;
+
             var ccu=jsondata['ConcurrentUser'][index].CCU;
             var game_name=jsondata['ConcurrentUser'][index].Name;
 
+            key=name+'_'+game_id;
             key=name+'_'+game_id;
             existGames[key]={chart_cell_id:'', ccu:0, game_id:0};
             existGames[key].ccu=ccu;
